@@ -39,13 +39,21 @@
 <script charset="utf-8">
 
     // Initialize Firebase
+    // var config = {
+    //     apiKey: "AIzaSyAJ5RdFwlgs2vhnTMwZqovXGyLbMBFkio8",
+    //     authDomain: "firechat-9d763.firebaseapp.com",
+    //     databaseURL: "https://firechat-9d763.firebaseio.com",
+    //     projectId: "firechat-9d763",
+    //     storageBucket: "firechat-9d763.appspot.com",
+    //     messagingSenderId: "136517215478"
+    // };
     var config = {
-        apiKey: "AIzaSyAJ5RdFwlgs2vhnTMwZqovXGyLbMBFkio8",
-        authDomain: "firechat-9d763.firebaseapp.com",
-        databaseURL: "https://firechat-9d763.firebaseio.com",
-        projectId: "firechat-9d763",
-        storageBucket: "firechat-9d763.appspot.com",
-        messagingSenderId: "136517215478"
+        apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
+        authDomain: "clean-phoenix-483.firebaseapp.com",
+        databaseURL: "https://clean-phoenix-483.firebaseio.com",
+        projectId: "clean-phoenix-483",
+        storageBucket: "clean-phoenix-483.appspot.com",
+        messagingSenderId: "408658909261"
     };
     firebase.initializeApp(config);
 
@@ -61,6 +69,8 @@
 
     $(document).ready(function () {
         var refStudents = firebase.database().ref('students');
+
+        console.log(refStudents.parent);
 
         refStudents.on('value', function (snapshot) {
             var val = snapshot.val();
