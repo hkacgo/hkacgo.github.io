@@ -463,28 +463,23 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="panel panel-primary" style="margin-top: 20px;">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">產品資料表</h3>
-                        </div>
-                        <table class="table table-hover text-left" id="dev-table">
-                            <thead>
-                                <tr>
-                                    <th>類別</th>
-                                    <th>物品名稱及數量</th>
-                                    <th>儲位</th>
-                                    <th>櫃位</th>
-                                    <th>存量</th>
-                                    <th>圖片</th>
-                                    <th>替代物品</th>
-                                    <th>修改</th>
-                                    <th>刪除</th>
-                                </tr>
-                            </thead>
-                            <tbody id="userInfo">
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-hover text-left" id="dev-table">
+                        <thead>
+                            <tr>
+                                <th>類別</th>
+                                <th>物品名稱及數量</th>
+                                <th>儲位</th>
+                                <th>櫃位</th>
+                                <th>存量</th>
+                                <th>圖片</th>
+                                <th>替代物品</th>
+                                <th>修改</th>
+                                <th>刪除</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userInfo">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -494,6 +489,7 @@
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -588,10 +584,13 @@
             }
 
             function reloadTable() {
-                refStudents.on('value', function (list) {
+                var num = 1;
+                refStudents.once('value', function (list) {
                     $('#userInfo').children().remove();
                     var data = list.val();
+                    console.log(data);
                     $.each(data, function(index, el) {
+
                         var table = $('#userInfo');
                         var tr = $('<tr dblclick="showInfo(\'' + index + '\')"></tr>');
                         
@@ -613,7 +612,7 @@
                         del.append(delBtn);
 
                         id.val(index);
-                        type.text(el.type);
+                        type.text(num + "" + el.type); num++;
                         name_num.text(el.name_num);
                         place.text(el.place);
                         placeDetail.text(el.placeDetail);
@@ -640,6 +639,7 @@
             }
 
             $(document).ready(function () {
+                $('#dev-table').DataTable();
                 reloadTable();
             });
 
