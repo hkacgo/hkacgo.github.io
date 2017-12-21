@@ -800,7 +800,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="panel panel-primary" style="margin-top: 20px;">
-            <div class="panel-heading">
+            <div class="panel-heading" style=" margin-bottom: 10px;">
                 <h3 class="panel-title"><strong>產品資料表</strong></h3>
             </div>
             <table id="dev-table" style="width: 100%; ">
@@ -1057,7 +1057,7 @@
         };
 
         firebase.initializeApp(config);
-        var refStudents = firebase.database().ref('product');
+        var productRef = firebase.database().ref('product');
 
         var table = $('#dev-table').DataTable({
             rowId: 'id',
@@ -1090,6 +1090,10 @@
                     "data": "exchange", 
                     "title": "替代物品"
                 },
+                {
+                  data: "del",
+                  title: "刪除"
+                }
             ],
             language: {
                 lengthMenu: "每頁 _MENU_ 筆資料",
@@ -1107,7 +1111,7 @@
             },
         });
 
-        refStudents.on('value', function (list) {
+        productRef.on('value', function (list) {
             var data = list.val();
             table.clear().draw();
             $.each(data, function(index, el) {
@@ -1119,14 +1123,80 @@
                     placeDetail: el.placeDetail, 
                     count: el.count, 
                     photo: el.photo, 
-                    exchange: el.exchange
+                    exchange: el.exchange,
+                    del: '<input type="button" class="btn btn-danger" value="刪除"/>'
                 }];
                 table.rows.add(dataSet).draw();
             });
         });
 
         $('#dev-table').on('dblclick', 'tbody tr[role=row]', function(event) {
-          alert(table.row(this).id());
+          var id = $(this).attr('id');
+          showInfo(id);
+        });
+
+        $('#dev-table').on('click', 'tbody tr td input[type=button]', function(event) {
+          if (confirm("您確定是否要刪除這筆資料!?")) {
+            del($(this).parent().parent().attr('id'));
+          }
+          
+        });
+
+        function create() {
+          productRef.push({
+            type: $('#type').val(),
+            name_num: $('#name_num').val(),
+            place: $('#place').val(),
+            placeDetail: $('#placeDetail').val(),
+            count: $('#count').val(),
+            photo: $('#photo').val(),
+            exchange: $('#exchange').val()
+          });
+        }
+
+        function showInfo(id) {
+          $('#sent').unbind('click');
+          $('#sent').on('click', function(event) {
+            update();
+          });
+
+          productRef.child(id).once('value', function (data) {
+            $('#type').val(data.val().type);
+            $('#name_num').val(data.val().name_num);
+            $('#place').val(data.val().place);
+            $('#placeDetail').val(data.val().placeDetail);
+            $('#count').val(data.val().count);
+            $('#photo').val(data.val().photo);
+            $('#exchange').val(data.val().exchange);
+            $('#id').val(id);
+          });
+        }
+
+        function update() {
+          if (confirm("您確定是否要修改這筆資料!?")) {
+            productRef.child($('#id').val()).set({
+              type: $('#type').val(),
+              name_num: $('#name_num').val(),
+              place: $('#place').val(),
+              placeDetail: $('#placeDetail').val(),
+              count: $('#count').val(),
+              photo: $('#photo').val(),
+              exchange: $('#exchange').val()
+            });
+          }
+          
+          $('#sent').unbind('click');
+          $('#sent').on('click', function(event) {
+            create();
+          });
+        }
+
+        function del(id) {
+          productRef.child(id).remove();
+        }
+
+        $('#sent').on('click', function(event) {
+          create();
         });
     });
 
