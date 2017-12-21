@@ -40,6 +40,12 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
   
   <style>
+  	  table{
+		  font-size: 18px;
+		  font-weight: bold;
+		  text-align:center;
+  	  }
+
       table thead tr {
           background-color: #99c6e0;
           height: 50px;
@@ -53,6 +59,130 @@
           background-color: #e86363;
       }
 
+	  /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        padding-left:100px;
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0} 
+        to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #428bca;
+        color: white;
+    }
+
+    .modal-body {
+        padding: 2px 16px;
+        background-color: #ccc;
+    }
+    /* button */
+    .w3-button{
+        border:none;
+        display:inline-block;
+        outline:0;
+        padding:8px 16px;
+        vertical-align:middle;
+        text-decoration:none;
+        text-align:center;
+        cursor:pointer;
+        white-space:nowrap;
+        color:#000;
+        background-color:#3c8dbc;
+        width:100%;
+    }
+    .w3-button:hover{
+        color:#fff;
+        background-color:#e86363;
+    }
+    /* input */
+    input{
+        font: 20px "Lato", Arial, sans-serif; 
+        width: 100%; 
+        letter-spacing: 3px;
+    }
+
+    /* 跟隨 */
+	.sticky {
+        position: fixed;
+        top:0;
+        left:10vw; 
+        right:10vw; 
+        width:80%;
+        z-index: 9999;
+        transition: .1s ease-in;
+    }
+
+	@media screen and (max-width: 769px) {
+
+		.modal {
+	        z-index: 999;
+	        padding-left:0;
+	    }
+		.mar375 {
+			margin-bottom:10px;
+		}
+	}
+
+	@media screen and (max-width: 415px) {
+
+		.modal {
+	        padding-left:0;
+	    }
+		.mar375 {
+			margin-bottom:10px;
+		}
+	}
   </style>
 
 </head>
@@ -527,7 +657,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" style="margin-bottom:20px;">
       <h1>
         Dashboard
         <small>Control panel</small>
@@ -537,6 +667,133 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
+	
+	<!-- 新增資料表 -->
+	<section >
+		<div id="sticky_top" align="center" style="color: rgb(46, 125, 50); background: rgb(200, 230, 201);padding:20px;width:70vw;margin:0 auto">
+			<h3><strong>新增產品資料表資訊</strong></h3>
+			<button class="w3-button" id="myBtn">+</button>
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+                <div class="modal-header" style="padding:14px;">
+                  <span class="close">&times;</span>
+                  <div class="row">
+                    <div class="form-title" id="titleMessage">
+                        <span style="font-size: 18px;">新增產品資料表資訊</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-body">
+                  
+                  <form>
+					<br/>
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="type" type="text" class="form-control" name="Name" data-min-length="8" placeholder="請輸入類別..." style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="name_num" type="text" class="form-control" name="Name" data-min-length="8" placeholder="請輸入物品名稱及數量..."
+				    style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>                         
+                    
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="place" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入儲存位置..."
+				    style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+                    
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="placeDetail" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入櫃子位置..."
+				    style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+                    
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="count" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入存量..."
+				    style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="photo" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入圖片..."
+				    style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				    <input id="exchange" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入替代物品..."
+				    style="width:100%;" required="required">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+				    <input id="id" type="text" class="form-control" name="Name">
+				  	</div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row"> 
+                      <div class="col-md-offset-3 col-md-3 mar375">
+                        <button type="submit" class="w3-button">清除</button>
+                      </div>    
+                      <div class="col-md-3">
+                        <button id="sent" type="submit" class="w3-button">提交</button>
+                      </div>
+                      <div class="col-md-3"></div>
+                    </div><br/>
+                  </form>
+					
+                </div>
+              </div>
+
+            </div>
+		</div>
+	</section>
 
     <!-- Main content -->
     <section class="content">
@@ -843,7 +1100,7 @@
                 zeroRecords: "沒有找到相關資料",
                 info: "第 _PAGE_ 頁 ( 總共 _PAGES_ 頁 )",
                 infoEmpty: "無資料",
-                search: "收尋：",
+                search: "搜尋：",
                 infoFiltered: "(從 _MAX_ 筆資料過濾)",
                 paginate: {
                     first: "First",
@@ -942,6 +1199,51 @@
           create();
         });
     });
+
+    /* modal */
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // When the user scrolls the page, execute myFunction 
+	window.onscroll = function() {myFunction()};
+
+	// Get the navbar
+	var navbar = document.getElementById("sticky_top");
+
+	// Get the offset position of the navbar
+	var sticky = navbar.offsetTop;
+
+	// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+	function myFunction() {
+	  if (window.pageYOffset >= sticky) {
+	    navbar.classList.add("sticky")
+	  } else {
+	    navbar.classList.remove("sticky");
+	  }
+	}
 </script>
 </body>
 </html>
