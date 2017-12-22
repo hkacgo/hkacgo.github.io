@@ -682,8 +682,8 @@
                 <div class="modal-header" style="padding:14px;">
                   <span class="close">&times;</span>
                   <div class="row">
-                    <div class="form-title" id="titleMessage">
-                        <span style="font-size: 18px;">新增產品資料表資訊</span>
+                    <div class="form-title">
+                        <span style="font-size: 18px;" id="titleMessage">新增產品資料表資訊</span>
                     </div>
                   </div>
                 </div>
@@ -769,17 +769,17 @@
                     <div class="row">
                     <div class="col-md-offset-3 col-md-6">
                     <div class="input-group">
-            <input id="id" type="text" class="form-control" name="Name">
+            <input id="id" type="hidden" class="form-control" name="Name">
             </div>
                     </div>
                     <div class="col-md-3"></div>   
                     </div><br/>
 
                     <div class="row"> 
-                      <div class="col-md-offset-3 col-md-3 mar375">
+                      <div class="col-md-offset-3 col-md-3 mar375 col-xs-6">
                         <button type="submit" class="w3-button">清除</button>
                       </div>    
-                      <div class="col-md-3">
+                      <div class="col-md-3 col-xs-6">
                         <button id="sent" type="submit" class="w3-button">提交</button>
                       </div>
                       <div class="col-md-3"></div>
@@ -1054,38 +1054,42 @@
         };
 
         firebase.initializeApp(config);
-        var refStudents = firebase.database().ref('product');
+        var productRef = firebase.database().ref('product');
 
         var table = $('#dev-table').DataTable({
             rowId: 'id',
             columns: [
                 {
-                    "data": "type", 
-                    "title": "類別"
+                    data: "type", 
+                    title: "類別"
                 },
                 {
-                    "data": "name_num", 
-                    "title": "物品數量及名稱"
+                    data: "name_num", 
+                    title: "物品數量及名稱"
                 },
                 {
-                    "data": "place", 
-                    "title": "儲存位置"
+                    data: "place", 
+                    title: "儲存位置"
                 },
                 {
-                    "data": "placeDetail", 
-                    "title": "櫃子位置"
+                    data: "placeDetail", 
+                    title: "櫃子位置"
                 },
                 {
-                    "data": "count", 
-                    "title": "存量"
+                    data: "count", 
+                    title: "存量"
                 },
                 {
-                    "data": "photo", 
-                    "title": "圖片"
+                    data: "photo", 
+                    title: "圖片"
                 },
                 {
-                    "data": "exchange", 
-                    "title": "替代物品"
+                    data: "exchange", 
+                    title: "替代物品"
+                },
+                {
+                    data: "del", 
+                    title: "刪除"
                 },
             ],
             language: {
@@ -1104,7 +1108,7 @@
             },
         });
 
-        refStudents.on('value', function (list) {
+        productRef.on('value', function (list) {
             var data = list.val();
             table.clear().draw();
             $.each(data, function(index, el) {
@@ -1116,14 +1120,114 @@
                     placeDetail: el.placeDetail, 
                     count: el.count, 
                     photo: el.photo, 
-                    exchange: el.exchange
+                    exchange: el.exchange,
+                    del: '<input type="button" class="btn btn-danger" value="刪除">'
                 }];
                 table.rows.add(dataSet).draw();
             });
         });
 
         $('#dev-table').on('dblclick', 'tbody tr[role=row]', function(event) {
-          alert(table.row(this).id());
+          var id = $(this).attr('id');
+          $('#titleMessage').text('修改產品資料表資訊');
+          $('#sent').unbind('click');
+          $('#sent').on('click', function(event) {
+            update(id);
+          });
+
+          $('#id').val(id);
+          $('#type').val($(this).children('td')[0].innerText);
+          $('#name_num').val($(this).children('td')[1].innerText);
+          $('#place').val($(this).children('td')[2].innerText);
+          $('#placeDetail').val($(this).children('td')[3].innerText);
+          $('#count').val($(this).children('td')[4].innerText);
+          $('#photo').val($(this).children('td')[5].innerText);
+          $('#exchange').val($(this).children('td')[6].innerText);
+
+          modal.style.display = "block";
+        });
+
+        $('#dev-table').on('click', 'tbody input[type=button]', function(event) {
+          if (confirm("您確定是否要刪除這筆資料!?")) { 
+            del($(this).parent().parent().attr('id')); 
+          } 
+        });
+
+        function create() {
+          productRef.push({
+            id: $('#id').val(),
+            type: $('#type').val(),
+            name_num: $('#name_num').val(), 
+            place: $('#place').val(), 
+            placeDetail: $('#placeDetail').val(), 
+            count: $('#count').val(), 
+            photo: $('#photo').val(), 
+            exchange: $('#exchange').val()
+          }, function (error) {
+            if (error != null) {
+              alert('新增資料失敗！');
+            } else {
+              alert('新增資料成功！');
+              cleanData();
+              modal.style.display = "none";
+            }
+          });
+        }
+
+        function cleanData() {
+          $('#id').val('');
+          $('#type').val('');
+          $('#name_num').val('');
+          $('#place').val('');
+          $('#placeDetail').val('');
+          $('#count').val('');
+          $('#photo').val('');
+          $('#exchange').val('');
+        }
+
+        function update(id) {
+          if (confirm('您確定要更新此筆資料?')) {
+            productRef.child(id).set({
+              id: $('#id').val(),
+              type: $('#type').val(),
+              name_num: $('#name_num').val(), 
+              place: $('#place').val(), 
+              placeDetail: $('#placeDetail').val(), 
+              count: $('#count').val(), 
+              photo: $('#photo').val(), 
+              exchange: $('#exchange').val()
+            }, function (error) {
+              if (error != null) {
+                alert('修改資料失敗！');
+              } else {
+                alert('修改資料成功！');
+                cleanData();
+                $('#titleMessage').text('新增產品資料表資訊');
+                modal.style.display = "none";
+              }
+              
+            });
+          }
+
+          cleanData();
+          $('#sent').unbind('click');
+          $('#sent').on('click', function(event) {
+            create();
+          });
+        }
+
+        function del(id) {
+          productRef.child(id).remove(function (error) {
+            if (error != null) {
+                alert('刪除資料失敗！');
+              } else {
+                alert('刪除資料成功！');
+              }
+          });
+        }
+
+        $('#sent').on('click', function(event) {
+          create();          
         });
     });
 
@@ -1139,7 +1243,16 @@
 
     // When the user clicks the button, open the modal 
     btn.onclick = function() {
-        modal.style.display = "block";
+      $('#id').val('');
+      $('#type').val('');
+      $('#name_num').val('');
+      $('#place').val('');
+      $('#placeDetail').val('');
+      $('#count').val('');
+      $('#photo').val('');
+      $('#exchange').val('');
+      $('#titleMessage').text('新增產品資料表資訊');
+      modal.style.display = "block";
     }
 
     // When the user clicks on <span> (x), close the modal
@@ -1149,28 +1262,28 @@
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
     }
 
     // When the user scrolls the page, execute myFunction 
-	window.onscroll = function() {myFunction()};
+	  window.onscroll = function() {myFunction()};
 
-	// Get the navbar
-	var navbar = document.getElementById("sticky_top");
+	  // Get the navbar
+	  var navbar = document.getElementById("sticky_top");
 
-	// Get the offset position of the navbar
-	var sticky = navbar.offsetTop;
+	  // Get the offset position of the navbar
+	  var sticky = navbar.offsetTop;
 
-	// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
-	function myFunction() {
-	  if (window.pageYOffset >= sticky) {
-	    navbar.classList.add("sticky")
-	  } else {
-	    navbar.classList.remove("sticky");
+	  // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+	  function myFunction() {
+	    if (window.pageYOffset >= sticky) {
+	      navbar.classList.add("sticky")
+	    } else {
+	      navbar.classList.remove("sticky");
+	    }
 	  }
-	}
 </script>
 </body>
 </html>
