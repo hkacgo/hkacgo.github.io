@@ -488,9 +488,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>妝品原料清單</a></li>
-			<li><a href="a03.html"><i class="fa fa-circle-o"></i>妝品原料詳細資料</a></li>
-            <li><a href="a02.html"><i class="fa fa-circle-o"></i>新增妝品原料</a></li>			
+            <li><a href="index.html"><i class="fa fa-circle-o"></i>妝品原料清單</a></li>
+			<li><a href="a03.html"><i class="fa fa-circle-o"></i>妝品原料詳細資料</a></li>			
+            <li class="active"><a href="a02.html"><i class="fa fa-circle-o"></i>新增妝品原料</a></li>			
           </ul>
         </li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
@@ -515,33 +515,109 @@
 	
 	<!-- 新增資料表 -->
 	<section >
+              <!-- Modal content -->
+                <div class="modal-body">
+                  <div class="row">
+					<h3><strong>詳細資訊</strong></h3>
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>類別
+            <input id="type" type="text" class="form-control" name="Name" data-min-length="8" placeholder="請輸入類別..." style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
 
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="name_num" type="text" class="form-control" name="Name" data-min-length="8" placeholder="請輸入物品名稱及數量..."
+            style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>                         
+                    
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="place" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入儲存位置..."
+            style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+                    
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="placeDetail" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入櫃子位置..."
+            style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+                    
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="count" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入存量..."
+            style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
 
-				<!--div id="sticky_top" align="center" style="color: rgb(46, 125, 50); background: rgb(200, 230, 201);padding:20px;width:70vw;margin:0 auto">
-				</div -->
-			
-            <!-- The Modal 
-            <div id="myModal" class="modal" -->
-			
-        
-		
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="photo" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入圖片..."
+            style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="exchange" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入替代物品..."
+            style="width:100%;" required="required">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                    <div class="input-group">
+            <input id="id" type="hidden" class="form-control" name="Name">
+            </div>
+                    </div>
+                    <div class="col-md-3"></div>   
+                    </div><br/>
+
+                    <div class="row"> 
+                      <div class="col-md-offset-3 col-md-3 mar375 col-xs-6">
+                        <button type="submit" class="w3-button">清除</button>
+                      </div>    
+                      <div class="col-md-3 col-xs-6">
+                        <button id="sent" type="submit" class="w3-button">提交</button>
+                      </div>
+                      <div class="col-md-3"></div>
+                    </div><br/>
+					
+                </div>       
+		</div>
 	</section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="panel panel-primary" style="margin-top: 20px;">
-            <div class="panel-heading">
-                <h3 class="panel-title"><strong>產品資料表</strong></h3>
-            </div>
-            <table id="dev-table" style="width: 100%; ">
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- /.content -->
+
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
