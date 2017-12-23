@@ -281,120 +281,90 @@
         <li><a href="#"><i class="fa fa-原料管理系統"></i> Home</a></li>
         <li class="active">原料管理系統</li>
       </ol>
-    </section>
-	
-	<!-- 新增資料表 -->
-	<section >
-              <!-- Modal content -->
-			
-                <div class="modal-body">
-			<!--圖片						 -->	
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-					  
-						<img src="../dist/img/user7-128x128.jpg" class="img-responsive pad" alt="原料圖片">
-					  
-					</div>
+	  <div class="row">
+		<div class="col-md-12">
+		<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Quick Example</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+			  <div class="form-group">
+                <label>類別</label>
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option selected="selected">兩性離子型</option>
+                  <option>合成油脂蠟</option>
+                  <option>天然油脂蠟</option>
+				  <option>礦物油脂蠟</option>
+                  <option>抗菌&防腐劑</option>
+                  <option>理療劑</option>
+				  <option>矽乳化劑</option>
+				  <option>賦濕劑(保濕劑)</option>
+				  <option>防晒劑</option>				  
+				  <option>矽化合物</option>
+				  <option>粉體原料</option>
+				  <option>精油香精類</option>
+                  <option>植物萃取液</option>				  
+				  <option>維生素類</option>
+				  <option>陰離子型</option>
+				  <option>非離子型</option>
+				  <option>高分子膠&黏稠劑</option>
+				  <option>高級脂肪酸</option>
+				  <option>酸</option>
+				  <option>鹼</option>
+                  <option>其它</option>
+                </select>
+              </div>				
+			  
+			  
+                <div class="form-group">
+                  <label for="exampleInputEmail1">原物料名稱</label>
+                  <input type="text" class="form-control" placeholder="原物料名稱">
                 </div>
-				<div class="col-md-3"></div>   
-            </div>
-			<!--						 -->
-					<br/>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">數量(CC)(g)(瓶)</label>
+				  <input type="text" class="form-control" placeholder="數量">	
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">儲位</label>
+                  <input type="text" class="form-control" placeholder="儲位">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">櫃位</label>
+                  <input type="text" class="form-control" placeholder="櫃位">
+                </div>				
+				
+                <div class="form-group">
+				  <!-- http://placehold.it/150x100 -->
+				  <label for="exampleInputFile">原物料圖片</label>
+				  <img src="http://placehold.it/300x300" class="img-responsive pad" alt="原料圖片">                  
+                  <input type="file" id="exampleInputFile">
+                  
+                </div>
+				<div class="form-group">
+                <div class="checkbox">
+				  <label for="exampleInputFile">替代物品</label>	
+                  <label>
+                    <input type="checkbox">列出清單或用下拉選單來複選資料
+                  </label>
+                </div>
+				</div>
+              </div>
+              <!-- /.box-body -->
 
-					
-                  <div class="row">					
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="type" type="text" class="form-control" name="Name" data-min-length="8" placeholder="請輸入類別..." style="width:100%;" required="required">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>
-
-                    <div class="row">
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="name_num" type="text" class="form-control" name="Name" data-min-length="8" placeholder="請輸入物品名稱及數量..."
-            style="width:100%;" required="required">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>                         
-                    
-                    <div class="row">
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="place" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入儲存位置..."
-            style="width:100%;" required="required">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>
-                    
-                    <div class="row">
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="placeDetail" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入櫃子位置..."
-            style="width:100%;" required="required">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>
-                    
-                    <div class="row">
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="count" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入存量..."
-            style="width:100%;" required="required">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>
-
-
-
-                    <div class="row">
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="exchange" type="text" class="form-control" name="Name" data-min-length="10" placeholder="請輸入替代物品..."
-            style="width:100%;" required="required">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>
-
-                    <div class="row">
-                    <div class="col-md-offset-3 col-md-6">
-                    <div class="input-group">
-            <input id="id" type="hidden" class="form-control" name="Name">
-            </div>
-                    </div>
-                    <div class="col-md-3"></div>   
-                    </div><br/>
-
-                    <div class="row"> 
-                      <div class="col-md-offset-3 col-md-3 mar375 col-xs-6">
-                        <button type="submit" class="w3-button">清除</button>
-                      </div>    
-                      <div class="col-md-3 col-xs-6">
-                        <button id="sent" type="submit" class="w3-button">提交</button>
-                      </div>
-                      <div class="col-md-3"></div>
-                    </div><br/>
-					
-                </div>       
+              <div class="box-footer">
+				<button type="submit" class="btn btn-danger">取消</button>
+                <button type="submit" class="btn btn-primary">送出</button>
+				
+              </div>
+            </form>
+          </div>
 		</div>
-	</section>
-
-
-  </div>
+	  </div>
+    </section>
+</div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
