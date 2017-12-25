@@ -1,0 +1,11 @@
+.category-info {
+	height: 350px;
+	background-color: #b6c0da;
+	-webkit-transition: background-color 500ms, box-shadow 500ms;
+}
+
+.category-info:hover {
+	background-color: #cdcfd4;
+	box-shadow: 10px 10px 5px grey;
+	-webkit-transition: background-color 500ms, box-shadow 500ms; /* For Safari 3.1 to 6.0 */
+}

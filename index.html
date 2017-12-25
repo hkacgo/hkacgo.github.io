@@ -40,24 +40,23 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
   
   <style>
-  	  table{
-		  font-size: 18px;
-		  font-weight: bold;
-		  text-align:center;
-  	  }
+  	table {
+  		font-size: 18px;
+  		font-weight: bold;
+  	}
+    
+    table thead tr {
+      background-color: #99c6e0;
+      height: 50px;
+    }
 
-      table thead tr {
-          background-color: #99c6e0;
-          height: 50px;
-      }
+    table tbody tr:hover {
+      background-color: #3c8dbc;
+    }
 
-      table tbody tr:hover {
-          background-color: #3c8dbc;
-      }
-
-      table tbody tr td:hover {
-          background-color: #e86363;
-      }
+    table tbody tr td:hover {
+      background-color: #e86363;
+    }
 
 	  /* The Modal (background) */
     .modal {
@@ -153,36 +152,36 @@
     }
 
     /* 跟隨 */
-	.sticky {
-        position: fixed;
-        top:0;
-        left:10vw; 
-        right:10vw; 
-        width:80%;
-        z-index: 9999;
-        transition: .1s ease-in;
-    }
-
-	@media screen and (max-width: 769px) {
-
-		.modal {
-	        z-index: 999;
-	        padding-left:0;
-	    }
-		.mar375 {
-			margin-bottom:10px;
-		}
-	}
-
-	@media screen and (max-width: 415px) {
-
-		.modal {
-	        padding-left:0;
-	    }
-		.mar375 {
-			margin-bottom:10px;
-		}
-	}
+	 .sticky {
+          position: fixed;
+          top:0;
+          left:10vw; 
+          right:10vw; 
+          width:80%;
+          z-index: 9999;
+          transition: .1s ease-in;
+      }
+  
+	 @media screen and (max-width: 769px) {
+  
+	 	.modal {
+	         z-index: 999;
+	         padding-left:0;
+	     }
+	 	.mar375 {
+	 		margin-bottom:10px;
+	 	}
+	 }
+  
+	 @media screen and (max-width: 415px) {
+  
+	 	.modal {
+	         padding-left:0;
+	     }
+	 	.mar375 {
+	 		margin-bottom:10px;
+	 	}
+	 }
   </style>
 
 </head>
@@ -324,7 +323,6 @@
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.
   </footer>
 
-
 <!-- ./wrapper -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -382,29 +380,9 @@
                     title: "物品數量及名稱"
                 },
                 {
-                    data: "place", 
-                    title: "儲存位置"
-                },
-                {
-                    data: "placeDetail", 
-                    title: "櫃子位置"
-                },
-                {
                     data: "count", 
                     title: "存量"
-                },
-                {
-                    data: "photo", 
-                    title: "圖片"
-                },
-                {
-                    data: "exchange", 
-                    title: "替代物品"
-                },
-                {
-                    data: "del", 
-                    title: "刪除"
-                },
+                }
             ],
             language: {
                 lengthMenu: "每頁 _MENU_ 筆資料",
@@ -430,12 +408,7 @@
                     id: index,
                     type: el.type,
                     name_num: el.name_num, 
-                    place: el.place, 
-                    placeDetail: el.placeDetail, 
-                    count: el.count, 
-                    photo: el.photo, 
-                    exchange: el.exchange,
-                    del: '<input type="button" class="btn btn-danger" value="刪除">'
+                    count: el.count
                 }];
                 table.rows.add(dataSet).draw();
             });
