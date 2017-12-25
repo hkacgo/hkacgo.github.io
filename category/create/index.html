@@ -154,10 +154,7 @@
           <div class="row">
             <div class="col-md-offset-3 col-md-6">
               <div class="col-xs-6 col-md-6 col-sm-2">
-                <input type="button" class="btn btn-warning btn-lg btn-block" value="修改">
-              </div>
-              <div class="col-xs-6 col-md-6 col-sm-2">
-                <input type="button" class="btn btn-danger btn-lg btn-block" value="刪除">
+                <input type="button" class="btn btn-primary btn-lg btn-block" value="新增">
               </div>
             </div>
           </div>
@@ -220,33 +217,18 @@
         firebase.initializeApp(config);
         var categoryRef = firebase.database().ref('category');
 
-        var url = new URL(window.location);
-        var id = url.searchParams.get('id').replace('/', '');
-
-        $('input[value=修改]').on('click', function(event) {
-          categoryRef.child(id).set({
+        $('input[value=新增]').on('click', function(event) {
+          categoryRef.push({
             name: $('#name').val(),
             commit: $('#commit').val()
           }, function (error) {
             if (error != null) {
-              alert("修改失敗！");
+              alert("新增失敗！");
             } else {
-              alert("修改成功");
+              alert("新增成功");
               window.location = '../';
             }
           });
-        });
-
-        $('input[value=刪除]').on('click', function(event) {
-          alert('delete');
-        });
-
-        categoryRef.child(id).on('value', function (list) {
-          var data = list.val();
-
-          console.log(data);
-          $('#name').val(data.name);
-          $('#commit').val(data.commit);
         });
 
     });

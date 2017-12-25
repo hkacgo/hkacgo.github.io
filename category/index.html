@@ -113,8 +113,18 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="index.html"><i class="fa fa-circle-o"></i>妝品原料清單</a></li>
-			<li><a href="a03.html"><i class="fa fa-circle-o"></i>妝品原料詳細資料</a></li>			
-            <li class="active"><a href="a02.html"><i class="fa fa-circle-o"></i>新增妝品原料</a></li>			
+            <li><a href="a03.html"><i class="fa fa-circle-o"></i>妝品原料詳細資料</a></li>
+            <li class="active"><a href="a02.html"><i class="fa fa-circle-o"></i>新增妝品原料</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-原料管理系統"></i> <span>原料管理系統</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu" id="category-list">
           </ul>
         </li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>關於我們</span></a></li>
@@ -126,8 +136,17 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 20px;" >
+          <input type="button" class="btn btn-primary btn-lg btn-block" value="新增原料類別">
+        </div>
+      </div>
       <div class="row" id="category-group">
-        
+      </div>
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 20px;" >
+          <input type="button" class="btn btn-primary btn-lg btn-block" value="新增原料類別">
+        </div>
       </div>
     </div>
   </div>
@@ -185,33 +204,83 @@
         firebase.initializeApp(config);
         var categoryRef = firebase.database().ref('category');
 
-        $('#category-group').on('click', 'div[class=category-info]', function(event) {
-          var url = './information/?id=' + $(this).children('input[type=hidden]').val();
+        $('#category-group').on('click', 'input[value=修改]', function(event) {
+          var url = './information/?id=' + $(this).parent().parent().children('input[type=hidden]').val();
           window.location = url;
-          // console.log(url);
+        });
+
+        $('#category-group').on('click', 'input[value=刪除]', function(event) {
+          if (confirm('您確定要刪除此筆資料？')) {
+            categoryRef.child($(this).parent().parent().children('input[type=hidden]').val()).remove(function (error) {
+              if (error != null) {
+                alert("刪除失敗！");
+              } else {
+                alert("刪除成功！");
+              }
+            });
+          }
+        });
+
+        $('#category-group').on('click', 'input[value=新增原料]', function(event) {
+          /* Act on the event */
+        });
+
+        $('input[value=新增原料類別]').on('click', function(event) {
+          window.location = './create/';
         });
 
         categoryRef.on('value', function (list) {
           var data = list.val();
+          var father = $('#category-group');
+          father.children().remove();
 
           $.each(data, function(index, el) {
-            var enStr = 'One of the best ways to learn how to do anything new (including software APIs!) is to get your hands dirty as quickly as possible. These examples will show you how to perform tasks ranging from something as simple as applying DataTables to an HTML table, right the way through to doing server-side processing with pipelining and custom plugfunctions.';
+            console.log('reload');
+            // <li><a href="#test"><i class="fa fa-circle-o"></i>妝品原料清單</a></li>
+            var li = $('<li><a href="#' + index + '"><i class="fa fa-circle-o"></i>' + el.name + '</a></li>');
+            $('#category-list').append(li);
 
-            var chStr = '字數計算器可以快速地統計文章的內容，所含有多少個字節數，並且能夠細分為中文字數、中文標點數、英文字數、英文標點數、行列(段落)數，阿拉伯數字。字數計算器可以快速地統計文章的內容所含有多少個字節數，並且能夠細分為中文字數、中文標點數、英文字數、英文標點數、行列(段落)數，阿拉伯數字。英文字數、英文標點數、行列(段落)數。';
-
-            var father = $('#category-group');
-            var box = $('<div class="col-md-4 col-xs-12"></div>');
+            var box = $('<div class="col-xs-12 text-center"></div>');
             var innerBox = $('<div class="category-info"></div>');
+
+            var tag = $('<a id="' + index + '"></a>');
+
             var title = $('<h1 class="text-center"></h1>');
-            var context = $('<p class="lead text-center"></p>');
+
+            var commitBox = $('<div class="col-xs-12"></div>');
+            commitBox.css({
+              'height': '180px',
+            });
+            var commit = $('<p class="lead text-center"></p>');
             var id = $('<input type="hidden" />');
 
+            var createBox = $('<div class="col-xs-12"></div>');
+            createBox.css({
+              'margin-top': '10px',
+            });
+            var createBtn = $('<input type="button" value="新增原料" class="btn btn-success btn-lg btn-block" />');
+
+            var updateBox = $('<div class="col-xs-6"></div>');
+            var updateBtn = $('<input type="button" class="btn btn-warning btn-lg btn-block" value="修改" />');
+
+            var deleteBox = $('<div class="col-xs-6"></div>');
+            var deleteBtn = $('<input type="button" class="btn btn-danger btn-lg btn-block" value="刪除" />');
+
             title.text(el.name);
-            context.text(el.commit);
+            commit.text(el.commit);
             id.val(index);
 
+            createBox.append(createBtn);
+            commitBox.append(commit);
+            updateBox.append(updateBtn);
+            deleteBox.append(deleteBtn);
+
+            innerBox.append(tag);
             innerBox.append(title);
-            innerBox.append(context);
+            innerBox.append(commitBox);
+            innerBox.append(updateBox);
+            innerBox.append(deleteBox);
+            innerBox.append(createBox);
             innerBox.append(id);
 
             box.append(innerBox);
