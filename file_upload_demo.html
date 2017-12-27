@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+    <body>
+        <input type="file" id="file" accept="image/*" multiple>
+        <input type="button" id="upload" value="Upload" class="btn btn-primary btn-lg">
+        <input type="button" id="GetUrl" value="GetUrl" class="btn btn-success btn-lg">
+        <input type="button" id="del" value="Delete" class="btn btn-danger btn-lg">
+    </body>
+</html>
+<link href="Content/css/bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/jquery.dataTables.css" rel="stylesheet" />
+<link href="Content/css/DataTables/jquery-ui.css" rel="stylesheet" />
+<link href="Content/css/DataTables/Buttons-1.3.1/buttons.bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/Select-1.2.2/select.bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/DataTableEdit/editor.bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/DataTableEdit/editor.dataTables.css" rel="stylesheet" />
+<link href="Content/css/DataTables/Buttons-1.3.1/buttons.dataTables.css" rel="stylesheet" />
+
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="Content/js/DataTables/jquery.dataTables.js"></script>
+<script src="Content/js/DataTables/Buttons-1.3.1/dataTables.buttons.js"></script>
+<script src="Content/js/DataTables/Select/dataTables.select.js"></script>
+<script src="Content/js/DataTables/Buttons-1.3.1/buttons.bootstrap.js"></script>
+
+<script src="Content/js/DataTables/editor.autoComplete.js"></script>
+<script src="Content/js/DataTables/DataTableEdit/dataTables.editor.js"></script>
+<script src="Content/js/FirebaseStorageHelper.js"></script>
+
+<script charset="utf-8">
+    var fileHelper = new FirebaseStorageHelper({
+        apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
+        authDomain: "clean-phoenix-483.firebaseapp.com",
+        databaseURL: "https://clean-phoenix-483.firebaseio.com",
+        projectId: "clean-phoenix-483",
+        storageBucket: "clean-phoenix-483.appspot.com",
+        messagingSenderId: "408658909261"
+    });
+
+    $('#upload').on('click', function(event) {
+        fileHelper.uploadFile('#file', 'images');
+    });
+
+    $('#GetUrl').on('click', function(event) {
+        fileHelper.getFileURL('images/48cb3675-0553-3965-2f22-f114be22e381.png', function(url) {
+            console.log(url);
+        })
+    });
+
+    $('#del').on('click', function(event) {
+        fileHelper.deleteFile('images/48cb3675-0553-3965-2f22-f114be22e381.png', function() {
+            alert('done');
+        });
+    });
+
+
+</script>
