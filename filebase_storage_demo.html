@@ -29,10 +29,10 @@
 
 <script src="Content/js/DataTables/editor.autoComplete.js"></script>
 <script src="Content/js/DataTables/DataTableEdit/dataTables.editor.js"></script>
-<script src="Content/js/FirebaseStorageHelper.js"></script>
+<script src="Content/js/FirebaseHelper.js"></script>
 
 <script charset="utf-8">
-    var fileHelper = new FirebaseStorageHelper({
+    var helper = new FirebaseHelper({
         apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
         authDomain: "clean-phoenix-483.firebaseapp.com",
         databaseURL: "https://clean-phoenix-483.firebaseio.com",
@@ -42,20 +42,19 @@
     });
 
     $('#upload').on('click', function(event) {
-        fileHelper.uploadFile('#file', 'images');
+        helper.storage.uploadFile('#file', 'images');
     });
 
     $('#GetUrl').on('click', function(event) {
-        fileHelper.getFileURL('images/48cb3675-0553-3965-2f22-f114be22e381.png', function(url) {
+        helper.storage.getFileURL('images/48cb3675-0553-3965-2f22-f114be22e381.png', function(url) {
             console.log(url);
         })
     });
 
     $('#del').on('click', function(event) {
-        fileHelper.deleteFile('images/48cb3675-0553-3965-2f22-f114be22e381.png', function() {
+        helper.storage.deleteFile('images/48cb3675-0553-3965-2f22-f114be22e381.png', function() {
             alert('done');
         });
     });
-
 
 </script>

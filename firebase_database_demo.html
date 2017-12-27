@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+    <body>
+        <input type="button" value="delete" class="btn btn-danger btn-lg" id="del">
+        <input type="button" value="create" class="btn btn-primary btn-lg" id="create">
+        <input type="button" value="update" class="btn btn-warning btn-lg" id="update">
+    </body>
+</html>
+<link href="Content/css/bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/jquery.dataTables.css" rel="stylesheet" />
+<link href="Content/css/DataTables/jquery-ui.css" rel="stylesheet" />
+<link href="Content/css/DataTables/Buttons-1.3.1/buttons.bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/Select-1.2.2/select.bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/DataTableEdit/editor.bootstrap.css" rel="stylesheet" />
+<link href="Content/css/DataTables/DataTableEdit/editor.dataTables.css" rel="stylesheet" />
+<link href="Content/css/DataTables/Buttons-1.3.1/buttons.dataTables.css" rel="stylesheet" />
+
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="Content/js/DataTables/jquery.dataTables.js"></script>
+<script src="Content/js/DataTables/Buttons-1.3.1/dataTables.buttons.js"></script>
+<script src="Content/js/DataTables/Select/dataTables.select.js"></script>
+<script src="Content/js/DataTables/Buttons-1.3.1/buttons.bootstrap.js"></script>
+
+<script src="Content/js/DataTables/editor.autoComplete.js"></script>
+<script src="Content/js/DataTables/DataTableEdit/dataTables.editor.js"></script>
+<script src="Content/js/FirebaseHelper.js"></script>
+
+<script charset="utf-8">
+
+    var helper = new FirebaseHelper({
+        apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
+        authDomain: "clean-phoenix-483.firebaseapp.com",
+        databaseURL: "https://clean-phoenix-483.firebaseio.com",
+        projectId: "clean-phoenix-483",
+        storageBucket: "clean-phoenix-483.appspot.com",
+        messagingSenderId: "408658909261"
+    });
+
+    var dbHelpler = helper.database;
+
+    $(document).ready(function () {
+        dbHelpler.read('on', 'product', function(snapshot) {
+            console.log(snapshot.val());
+        });
+
+        $('#update').on('click', function(event) {
+            dbHelpler.update('product/-L1LtivfaNObhkzLhCeK', {
+                count:"",
+                exchange:"",
+                name_num:"test2",
+                photo:"",
+                place:"test2",
+                placeDetail:"test2",
+                type:"test2"
+            }, function() {
+                alert('update done.');
+            }, function(error) {
+                alert('update error');
+            });
+        });
+
+        $('#del').on('click', function(event) {
+            dbHelpler.delete('product/-L1Lt82QikmNUpWjH5L7', function() {
+                alert('delete done');  
+            }, function(error) {
+                alert('delete error');
+            });
+        });
+
+        $('#create').on('click', function(event) {
+            dbHelpler.create('product', {
+                count:"",
+                exchange:"",
+                name_num:"test",
+                photo:"",
+                place:"test",
+                placeDetail:"test",
+                type:"test"
+            }, function() {
+                alert('create done');
+            }, function(error) {
+                alert('create error');
+            });
+        });
+
+    });
+</script>
