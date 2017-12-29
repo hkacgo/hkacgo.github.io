@@ -25,7 +25,7 @@ function FirebaseStorageHelper() {
         file.each(function(index, singleFile) {
             var filenameExtension = singleFile.type.split('/').pop();
             var filename = guid() + '.' + filenameExtension;
-            console.log(filename);
+            // console.log(filename);
             result.push({
                 filename: filename,
                 file: singleFile
@@ -33,9 +33,11 @@ function FirebaseStorageHelper() {
         });
         
         result.forEach(function(data) {
-            console.log(child + '/' + data.filename);
+            // console.log(child + '/' + data.filename);
             firebase.storage().ref(child + '/' + data.filename).put(data.file);
         });
+
+        return result;
     }
     
     this.getFileURL = function(path, callBack) {
@@ -45,7 +47,6 @@ function FirebaseStorageHelper() {
     this.deleteFile = function(path, callBack) {
         firebase.storage().ref(path).delete().then(callBack);
     }
-    
 }
 
 function FirebaseDatabaseHelper() {
@@ -69,6 +70,7 @@ function FirebaseDatabaseHelper() {
                 break;
             case 'once':
                 talbeRef.once('value', callBack);
+                break;
             default:
                 throw new Error('ArgumentException!');
                 break;

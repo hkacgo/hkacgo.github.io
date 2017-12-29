@@ -202,32 +202,37 @@
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script src="../../Content/js/FirebaseHelper.js"></script>
+
 <script>
     $(document).ready(function() {
         // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
-            authDomain: "clean-phoenix-483.firebaseapp.com",
-            databaseURL: "https://clean-phoenix-483.firebaseio.com",
-            projectId: "clean-phoenix-483",
-            storageBucket: "clean-phoenix-483.appspot.com",
-            messagingSenderId: "408658909261"
-        };
+        var helper = new FirebaseHelper({
+          apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
+          authDomain: "clean-phoenix-483.firebaseapp.com",
+          databaseURL: "https://clean-phoenix-483.firebaseio.com",
+          projectId: "clean-phoenix-483",
+          storageBucket: "clean-phoenix-483.appspot.com",
+          messagingSenderId: "408658909261"
+        });
 
-        firebase.initializeApp(config);
-        var categoryRef = firebase.database().ref('category');
+        var dbHelpler = helper.database;
 
         $('input[value=新增]').on('click', function(event) {
-          categoryRef.push({
-            name: $('#name').val(),
-            commit: $('#commit').val()
-          }, function (error) {
-            if (error != null) {
-              alert("新增失敗！");
-            } else {
-              alert("新增成功");
-              window.location = '../';
-            }
+          dbHelpler.create('product', {
+            id: $('#id').val(),
+            type: $('#type').val(),
+            name_num: $('#name_num').val(),
+            place: $('#place').val(),
+            placeDetail: $('#placeDetail').val(),
+            count: $('#count').val(),
+            photo: $('#photo').val(),
+            exchange: $('#exchange').val()
+          }, function() {
+            alert("新增成功");
+            window.location = '../';
+          }, function(error) {
+            alert("新增失敗！");
           });
         });
 

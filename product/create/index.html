@@ -38,7 +38,6 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-</head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -124,47 +123,69 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- 顯示分類資訊 -->
-      <div class="box" style="margin-top: 50px;">
-        <div class="box box-success">
-          <div class="box-header with-border">
-            <h3 class="box-title">原料類別資訊</h3>
-          </div>
-        </div>
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <div class="col-xs-12">
-                <div class="form-group">
-                  <label for="">類別名稱</label>
-                  <input type="text" class="form-control" id="name">
-                </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        原料管理系統
+        <small>Control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-原料管理系統"></i> Home</a></li>
+        <li class="active">原料管理系統</li>
+      </ol>
+  	  <div class="row" style="margin-top: 20px;">
+    		<div class="col-md-12">
+      		<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Quick Example</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            
+            <div class="box-body">
+              <div class="form-group">
+                <label>類別</label>
+                <select class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true" id="category" required>
+                </select>
+              </div>        
+              <div class="form-group">
+                <label for="exampleInputEmail1">原物料名稱</label>
+                <input type="text" class="form-control" placeholder="原物料名稱" id="name_num">
               </div>
-              <div class="col-xs-12">
-                <div class="form-group">
-                  <label for="">描述</label>
-                  <textarea class="form-control" style="resize: vertical;" id="commit" rows="10"></textarea>
-                </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">數量(CC)(g)(瓶)</label>
+                <input type="text" class="form-control" placeholder="數量" id="count"> 
               </div>
-            </div>  
-          </div>
-        </div>
-        <div class="box-footer">
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <div class="col-xs-6 col-md-6 col-sm-2">
-                <input type="button" class="btn btn-warning btn-lg btn-block" value="修改">
+              <div class="form-group">
+                <label for="exampleInputEmail1">儲位</label>
+                <input type="text" class="form-control" placeholder="儲位" id="place">
               </div>
-              <div class="col-xs-6 col-md-6 col-sm-2">
-                <input type="button" class="btn btn-danger btn-lg btn-block" value="刪除">
+              <div class="form-group">
+                <label for="exampleInputEmail1">櫃位</label>
+                <input type="text" class="form-control" placeholder="櫃位" id="placeDetail">
+              </div>        
+              <div class="form-group">
+                <label for="exampleInputFile">替代物品</label>  
+                <input type="text" id="exchange" class="form-control" placeholder="列出清單或用下拉選單來複選資料">
+              </div>
+              <div class="form-group">
+                <!-- http://placehold.it/150x100 -->
+                <label for="exampleInputFile">原物料圖片</label>
+                <img src="http://placehold.it/300x300" class="img-responsive pad" alt="原料圖片" id="preview">                  
+                <input type="file" accept="image/*" required>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            
+            <!-- /.box-body -->
 
+            <div class="box-footer">
+              <button type="button" class="btn btn-danger">取消</button>
+              <button type="button" class="btn btn-primary" id="create">送出</button>
+            </div>
+          </div>
+    		</div>
+  	  </div>
+    </section>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -173,6 +194,7 @@
     </div>
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.
   </footer>
+
 
 </div>
 <!-- ./wrapper -->
@@ -206,57 +228,99 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 <script src="../../Content/js/FirebaseHelper.js"></script>
+
 <script>
-    $(document).ready(function() {
+  // Initialize Firebase
+  var helper = new FirebaseHelper({
+    apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
+    authDomain: "clean-phoenix-483.firebaseapp.com",
+    databaseURL: "https://clean-phoenix-483.firebaseio.com",
+    projectId: "clean-phoenix-483",
+    storageBucket: "clean-phoenix-483.appspot.com",
+    messagingSenderId: "408658909261"
+  });
 
-      var helper = new FirebaseHelper({
-        apiKey: "AIzaSyDYyRD38KTqPLe3VPA5kSVXwq10vBmjmWQ",
-        authDomain: "clean-phoenix-483.firebaseapp.com",
-        databaseURL: "https://clean-phoenix-483.firebaseio.com",
-        projectId: "clean-phoenix-483",
-        storageBucket: "clean-phoenix-483.appspot.com",
-        messagingSenderId: "408658909261"
-      });
+  var dbHelpler = helper.database;
+  var stHelpler = helper.storage;
 
-      var dbHelpler = helper.database;
-
-      var url = new URL(window.location);
-      var id = url.searchParams.get('id').replace('/', '');
-      var path = 'category/' + id;
-
-      $('input[value=修改]').on('click', function(event) {
-        if (confirm('確定是否要修改？')) {
-          dbHelpler.update(path, {
-            name: $('#name').val(),
-            commit: $('#commit').val()
-          }, function() {
-            alert("修改成功！");
-            window.location = '../';
-          }, function(error) {
-            alert("修改失敗！");
-          });
-        }
-      });
-
-      dbHelpler.read('once', path, function(snapshot) {
-        var data = snapshot.val();
-        // console.log(data);
-        $('#name').val(data.name);
-        $('#commit').val(data.commit);
-      });
-      
-      $('input[value=刪除]').on('click', function(event) {
-        if (confirm('確定是否要刪除？')) {
-          dbHelpler.delete(path, function() {
-            alert('刪除成功！');
-            window.location = '../';
-          }, function(error) {
-            alert('刪除失敗！');
-          });
-        }
-      });
-
+  dbHelpler.read('on', 'category', function (data) {
+    $('#category').children().remove();
+    $('#category').append('<option value="">請選擇原料類別</option>')
+    $.each(data.val(), function(index, el) {
+      $('#category').append('<option value="'+ index +'">' + el.name + '</option>')
     });
+  });
+
+  function format_float(num, pos) {
+    var size = Math.pow(10, pos);
+    return Math.round(num * size) / size;
+  }
+  
+  function preview(input, img) {
+  
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function (e) {
+        $(img).attr('src', e.target.result);
+        var KB = format_float(e.total / 1024, 2);
+        console.log("檔案大小：" + KB + " KB");
+      }
+      
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $('input[type=file]').on('change', function(event) {
+    preview(this, '#preview');
+  });
+
+  $('#create').on('click', function(event) {
+    
+    
+
+    if ($('#category').val() == '' || $('#name_num').val() == '' || $('input[type=file]').val() == '') {
+      var nullBox = '';
+      if ($('#category').val() == '') {
+        nullBox += '請選擇原料類別！\n';
+      }
+      if ($('#name_num').val() == '') {
+        nullBox += '請填寫原物料名稱！\n';
+      }
+      if ($('input[type=file]').val() == '') {
+        nullBox += '請選擇圖片！\n';
+      }
+      alert(nullBox); 
+    } else {
+      var uploadFileResult = stHelpler.uploadFile('input[type=file]', 'images');
+      var fileName = '';
+      
+      // dbHelpler.read('once', 'category/' + $('#category').val(), function(data) {
+      //   console.log(data.val().name);
+      // });
+
+      uploadFileResult.forEach(function(el) {
+        fileName = el.filename;
+      });
+
+      dbHelpler.create('product', {
+        type: $('#category').val(),
+        name_num: $('#name_num').val(),
+        count: $('#count').val(),
+        photo: fileName,
+        place: $('#place').val(),
+        placeDetail: $('#placeDetail').val(),
+        exchange: $('#exchange').val()
+      }, function() {
+        alert("新增成功");
+        window.location = '../';
+      }, function(error) {
+        alert("新增失敗！");
+      });
+    }
+  });
+
 </script>
+
 </body>
 </html>
