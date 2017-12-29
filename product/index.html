@@ -272,7 +272,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="margin-bottom:20px;">
+    <section class="content-header">
       <h1>
         原料管理系統
         <small>Control panel</small>
@@ -301,7 +301,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <div class="panel panel-primary" style="margin-top: 20px;">
+          <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title"><strong>產品資料表</strong></h3>
             </div>
@@ -404,37 +404,23 @@
             var data = list.val();
             table.clear().draw();
             $.each(data, function(index, el) {
-                var name;
-                var typeName = dbHelper.read('once', 'category/' + el.type, (function(data) {
-                    name = data.val().name;
-                    console.log('insitel：' + data.val().name == '' ? 'yes' : 'no');
-                })(name));
-
-                console.log('outsite:' + name);
-
-                // var dataSet = [{
-                //     id: index,
-                //     type: typeName,
-                //     name_num: el.name_num, 
-                //     count: el.count
-                // }];
-                // table.rows.add(dataSet).draw();
+                dbHelper.read('once', 'category/' + el.type, (function(data) {
+                    var typeName = '';
+                    try {
+                        typeName = data.val().name;
+                    } catch(e) {
+                        typeName = 'null';
+                    }
+                    var dataSet = [{
+                        id: index,
+                        type: typeName,
+                        name_num: el.name_num,
+                        count: el.count
+                    }];
+                    table.rows.add(dataSet).draw();
+                }));
             });
-        });
-
-        // productRef.on('value', function (list) {
-        //     var data = list.val();
-        //     table.clear().draw();
-        //     $.each(data, function(index, el) {
-        //         var dataSet = [{
-        //             id: index,
-        //             type: el.type,
-        //             name_num: el.name_num, 
-        //             count: el.count
-        //         }];
-        //         table.rows.add(dataSet).draw();
-        //     });
-        // });
+        }); 
 
         $('#dev-table').on('dblclick', 'tbody tr[role=row]', function(event) {
 
