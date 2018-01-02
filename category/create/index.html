@@ -219,14 +219,9 @@
         var dbHelpler = helper.database;
 
         $('input[value=新增]').on('click', function(event) {
-          dbHelpler.create('product', {
-            type: $('#type').val(),
-            name_num: $('#name_num').val(),
-            place: $('#place').val(),
-            placeDetail: $('#placeDetail').val(),
-            count: $('#count').val(),
-            photo: $('#photo').val(),
-            exchange: $('#exchange').val()
+          dbHelpler.create('category', {
+            name: $('#name').val(),
+            commit: $('#commit').val(),
           }, function() {
             alert("新增成功");
             window.location = '../';
